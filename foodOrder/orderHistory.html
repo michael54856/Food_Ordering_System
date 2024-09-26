@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>中興大學訂餐系統</title>
+        <link rel="stylesheet" href="style/myStyle.css">
+        <script src="scripts/login.js"></script>
+        <script  type="text/javascript" src="scripts/jQuery.js"></script>
+        <script  type="text/javascript" src="scripts/logout.js"></script>
+        <script  type="text/javascript" src="scripts/fetchOrder.js"></script>
+    </head>
+    <body>
+        <div id="sideBar">
+            <a href="index.html">首頁</a>
+            <a href="restaurantList.html">餐廳列表</a>
+            <a href="accountInfo.html" id="accountInfo">會員資料</a>
+            <a href="shoppingCart.html" id="shoppingCar" style="display: flex;">購物車
+                <div id="cartAmount"> 0 </div>
+            </a>
+            <a href="orderHistory.html" id="Order">訂單紀錄</a>
+            <div id="totalPrice">
+                <img src="assest/cartIconRed.png">
+                $ 0
+            </div>
+        </div>
+        <div id="topBar">
+            <div id="bannerIcon" onclick="location.href='./index.html'"></div>
+            <div id="bannerText" onclick="location.href='./index.html'">中興大學訂餐系統</div>
+            <button id="loginButton"  onclick="location.href='./login.html'">
+                <img src="assest/accountIcon.png" class="topButtonIcon">
+                登入
+            </button>
+            <button id="registerButton" onclick="location.href='./register.html'">
+                <img src="assest/registerIcon.png" class="topButtonIcon">
+                註冊
+            </button>
+            <button id="logoutButton" onclick="logout()">
+                <img src="assest/logout.png" class="topButtonIcon">
+                登出
+            </button>
+        </div>
+
+        <div class="orderTitle">未完成訂單</div>
+
+        <table id = "preparingTable" border="1" style="margin-top: 50px;">
+            <thead>
+              <tr>
+                <th>訂單編號</th>
+                <th>餐廳</th>
+                <th>訂購內容</th>
+                <th>總金額</th>
+                <th>預定時間</th>
+                <th>狀態</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </table>
+
+        <div class="orderTitle">已完成訂單</div>
+        <table id = "completedTable" border="1" style="margin-top: 50px;">
+            <thead>
+              <tr>
+                <th>訂單編號</th>
+                <th>餐廳</th>
+                <th>訂購內容</th>
+                <th>總金額</th>
+                <th>預定時間</th>
+                <th>狀態</th>
+                <th>評分</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </table>
+        
+       
+        <script>
+
+            $.ajax({
+                url:"./php/getAccountInfo.php",    
+                type: "post",   
+                dataType: 'json',
+                async: false,
+                data: {loginAccount : 1},
+                success:function(result)
+                {
+                    if(result['haveLoggedIn'] == "true")
+                    {
+                        var loginButton = document.getElementById('loginButton');
+                        var registerButton = document.getElementById('registerButton');
+                        loginButton.remove();
+                        registerButton.remove();
+
+                        
+
+                        if(sessionStorage.getItem("shoppingCart") != null) 
+                        {
+                            var cartList = JSON.parse(sessionStorage.getItem("shoppingCart"));
+                            document.getElementById("cartAmount").style.display = "block";
+                            document.getElementById("cartAmount").innerHTML =  cartList['orderList'].length;
+
+                            var sum = 0;
+                            for(var i = 0; i < cartList['orderList'].length; i++)
+                            {
+                                sum += cartList['orderList'][i]['price'] * cartList['orderList'][i]['amount'];
+                            }
+                            document.getElementById("totalPrice").innerHTML = "<img src=\"assest/cartIconRed.png\">" + "$ " + sum;
+                        }
+
+                    }
+                    else
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+            $.ajax({
+                url:"./php/checkIsShopOwner.php",    
+                type: "post",   
+                async: false,
+                data: {loginAccount : 1},
+                success:function(result)
+                {
+                    if(result.includes("true"))
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+
+        </script>
+        
+        <script>
+            fetchPreparingOrder();
+            fetchCompletedOrder();
+        </script>
+
+        
+
+
+    </body>
+
+</html>

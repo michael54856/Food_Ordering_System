@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>中興大學訂餐系統</title>
+        <link rel="stylesheet" href="style/myStyle.css">
+        <script src="scripts/login.js"></script>
+        <script  type="text/javascript" src="scripts/jQuery.js"></script>
+        <script  type="text/javascript" src="scripts/logout.js"></script>
+        <script  type="text/javascript" src="scripts/updateInfo.js"></script>
+    </head>
+    <body>
+        <div id="sideBar">
+            <a href="index.html">首頁</a>
+            <a href="restaurantList.html">餐廳列表</a>
+            <a href="accountInfo.html" id="accountInfo">會員資料</a>
+            <a href="shoppingCart.html" id="shoppingCar" style="display: flex;">購物車
+                <div id="cartAmount"> 0 </div>
+            </a>
+            <a href="orderHistory.html" id="Order">訂單紀錄</a>
+            <div id="totalPrice">
+                <img src="assest/cartIconRed.png">
+                $ 0
+            </div>
+        </div>
+        <div id="topBar">
+            <div id="bannerIcon" onclick="location.href='./index.html'"></div>
+            <div id="bannerText" onclick="location.href='./index.html'">中興大學訂餐系統</div>
+            <button id="loginButton"  onclick="location.href='./login.html'">
+                <img src="assest/accountIcon.png" class="topButtonIcon">
+                登入
+            </button>
+            <button id="registerButton" onclick="location.href='./register.html'">
+                <img src="assest/registerIcon.png" class="topButtonIcon">
+                註冊
+            </button>
+            <button id="logoutButton" onclick="logout()">
+                <img src="assest/logout.png" class="topButtonIcon">
+                登出
+            </button>
+        </div>
+
+        <div class="accountInfoDiv">
+            <h1>會員資料</h1>
+            <div class="eachRow" style="margin-top: 30px;">
+                <img src="assest/accountIcon.png" class="accountInfoIcon">
+                <div id="accountInfoDivEachrowTitle">帳號：</div>
+                <div id="accountInfoDiv_account"></div>
+            </div>
+            <div class="eachRow">
+                <img src="assest/nameIcon.png" class="accountInfoIcon">
+                <div id="accountInfoDivEachrowTitle">新名字： </div>
+                <input type="text" placeholder="" id="accountInfoDiv_name">
+            </div>
+            <div class="eachRow">
+                <img src="assest/phoneIcon.png" class="accountInfoIcon">
+                <div id="accountInfoDivEachrowTitle">新手機號碼： </div>
+                <input type="text" placeholder="" id="accountInfoDiv_phone">
+            </div>
+            <div class="eachRow">
+                <img src="assest/passwordIcon.png" class="accountInfoIcon">
+                <div id="accountInfoDivEachrowTitle">新密碼： </div>
+                <input type="password" placeholder="" id="accountInfoDiv_password1">
+            </div>
+            <div class="eachRow">
+                <img src="assest/passwordIcon.png" class="accountInfoIcon">
+                <div id="accountInfoDivEachrowTitle">新密碼確認： </div>
+                <input type="password" placeholder="" id="accountInfoDiv_password2">
+            </div>
+            <button id="formAddBtn" style="margin-top: 50px;" type="button" value="Submit" onclick="updateAccountInfo()">更新資料</button>
+        </div>
+       
+        <script>
+
+            $.ajax({
+                url:"./php/getAccountInfo.php",    
+                type: "post",   
+                dataType: 'json',
+                async: false,
+                data: {loginAccount : 1},
+                success:function(result)
+                {
+                    console.log(result);
+                    if(result['haveLoggedIn'] == "true")
+                    {
+                        var loginButton = document.getElementById('loginButton');
+                        var registerButton = document.getElementById('registerButton');
+                        loginButton.remove();
+                        registerButton.remove();
+
+                        var accountInfoDiv_account = document.getElementById('accountInfoDiv_account');
+                        var accountInfoDiv_name = document.getElementById('accountInfoDiv_name');
+                        var accountInfoDiv_phone = document.getElementById('accountInfoDiv_phone');
+
+                        accountInfoDiv_account.innerHTML = result['account'];
+                        accountInfoDiv_name.placeholder = result['name'];
+                        accountInfoDiv_phone.placeholder = result['phone'];
+
+                        if(sessionStorage.getItem("shoppingCart") != null) 
+                        {
+                            var cartList = JSON.parse(sessionStorage.getItem("shoppingCart"));
+                            document.getElementById("cartAmount").style.display = "block";
+                            document.getElementById("cartAmount").innerHTML =  cartList['orderList'].length;
+
+                            var sum = 0;
+                            for(var i = 0; i < cartList['orderList'].length; i++)
+                            {
+                                sum += cartList['orderList'][i]['price'] * cartList['orderList'][i]['amount'];
+                            }
+                            document.getElementById("totalPrice").innerHTML = "<img src=\"assest/cartIconRed.png\">" + "$ " + sum;
+                        }
+
+                    }
+                    else
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+            $.ajax({
+                url:"./php/checkIsShopOwner.php",    
+                type: "post",   
+                async: false,
+                data: {loginAccount : 1},
+                success:function(result)
+                {
+                    if(result.includes("true"))
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+
+        </script>
+        
+        
+
+        
+
+
+    </body>
+
+</html>

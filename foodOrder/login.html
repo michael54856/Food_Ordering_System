@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>中興大學訂餐系統</title>
+        <link rel="stylesheet" href="style/myStyle.css">
+        <script src="scripts/login.js"></script>
+        <script  type="text/javascript" src="scripts/jQuery.js"></script>
+    </head>
+    <body>
+        <div id="sideBar">
+            <a href="index.html">首頁</a>
+            <a href="restaurantList.html">餐廳列表</a>
+        </div>
+        <div id="topBar">
+            <div id="bannerIcon" onclick="location.href='./index.html'"></div>
+            <div id="bannerText" onclick="location.href='./index.html'">中興大學訂餐系統</div>
+            <button id="loginButton"  onclick="location.href='./login.html'">
+                <img src="assest/accountIcon.png" class="topButtonIcon">
+                登入
+            </button>
+            <button id="registerButton" onclick="location.href='./register.html'">
+                <img src="assest/registerIcon.png" class="topButtonIcon">
+                註冊
+            </button>
+        </div>
+
+        <div class="formDiv">
+            <form id="loginForm" style="height: 330px; margin-top: 200px">
+                <h1>登入</h1>
+                <div class="inputField">
+                    <input type="text" placeholder="帳號" id="loginAccount">
+                </div>
+                <div class="inputField">
+                    <input type="password" placeholder="密碼" id="loginPassword">
+                </div>
+            </form>
+            <button id="formAddBtn" type="button" value="Submit" onclick="loginAndCheck()">登入</button>
+        </div>
+       
+        <script>
+
+            $.ajax({
+                url:"./php/checkSession.php",    
+                type: "post",   
+                data: 
+                {
+                    loginAccount : 1
+                },
+                success:function(result)
+                {
+                    if(result.includes("true"))
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+
+        </script>
+        
+        
+
+        
+
+
+    </body>
+
+</html>

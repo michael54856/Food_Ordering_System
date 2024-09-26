@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>中興大學訂餐系統</title>
+        <link rel="stylesheet" href="style/myStyle.css">
+        <script  type="text/javascript" src="scripts/jQuery.js"></script>
+        <script  type="text/javascript" src="scripts/logout.js"></script>
+        <script  type="text/javascript" src="scripts/putToShoppingCart.js"></script>
+    </head>
+    <body>
+        <div id="sideBar">
+            <a href="index.html">首頁</a>
+            <a href="restaurantList.html">餐廳列表</a>
+            <a href="accountInfo.html" id="accountInfo">會員資料</a>
+            <a href="shoppingCart.html" id="shoppingCar" style="display: flex;">購物車
+                <div id="cartAmount"> 0 </div>
+            </a>
+            <a href="orderHistory.html" id="Order">訂單紀錄</a>
+            <div id="totalPrice">
+                <img src="assest/cartIconRed.png">
+                $ 0
+            </div>
+        </div>
+        <div id="topBar">
+            <div id="bannerIcon" onclick="location.href='./index.html'"></div>
+            <div id="bannerText" onclick="location.href='./index.html'">中興大學訂餐系統</div>
+            <button id="loginButton"  onclick="location.href='./login.html'">
+                <img src="assest/accountIcon.png" class="topButtonIcon">
+                登入
+            </button>
+            <button id="registerButton" onclick="location.href='./register.html'">
+                <img src="assest/registerIcon.png" class="topButtonIcon">
+                註冊
+            </button>
+            <button id="logoutButton" onclick="logout()">
+                <img src="assest/logout.png" class="topButtonIcon">
+                登出
+            </button>
+        </div>
+
+        <div style="display: flex; margin-top: 100px; margin-left: 43%;">
+            <img src="assest/lousia.png" class="orderIcon">
+            <div class="restaurantTitle">路易莎咖啡</div>
+        </div>
+        
+
+        <div class="foodBlock" style="margin-top: 50px;">
+            <div class="blockTitle">輕食</div>
+            <div class="foodRow" style="margin-top: 30px;">
+                <div class="foodElement">
+                    <img src="assest/lousia_light1.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">豬肉起司瑪芬堡</div>
+                    <div class="foodPrice">$ 55</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','豬肉起司瑪芬堡',55)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_light2.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">火腿麥香三明治</div>
+                    <div class="foodPrice">$ 45</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','火腿麥香三明治',45)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_light3.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">義式磚壓三明治</div>
+                    <div class="foodPrice">$ 60</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','義式磚壓三明治',60)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_light4.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">牛肉佛卡夏</div>
+                    <div class="foodPrice">$ 60</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','牛肉佛卡夏',60)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+            </div>
+            <div class="foodRow" style="margin-top: 30px;">
+                <div class="foodElement">
+                    <img src="assest/lousia_light5.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">芋頭甜磚壓</div>
+                    <div class="foodPrice">$ 45</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','芋頭甜磚壓',45)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="foodBlock" style="margin-top: 50px;">
+            <div class="blockTitle">糕點</div>
+            <div class="foodRow" style="margin-top: 30px;">
+                <div class="foodElement">
+                    <img src="assest/lousia_cake1.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">經典起司蛋糕</div>
+                    <div class="foodPrice">$ 45</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','經典起司蛋糕',45)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake2.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">香蕉核桃旅人蛋糕</div>
+                    <div class="foodPrice">$ 35</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','香蕉核桃旅人蛋糕',35)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake3.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">深黑巧克力脆皮泡芙</div>
+                    <div class="foodPrice">$ 40</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','深黑巧克力脆皮泡芙',40)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake4.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">波士頓派</div>
+                    <div class="foodPrice">$ 60</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','波士頓派',60)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+            </div>
+            <div class="foodRow" style="margin-top: 30px;">
+                <div class="foodElement">
+                    <img src="assest/lousia_cake5.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">檸檬糖霜溫蛋糕</div>
+                    <div class="foodPrice">$ 65</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','100%檸檬糖霜溫蛋糕',65)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake6.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">焦糖蘋果派</div>
+                    <div class="foodPrice">$ 85</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','焦糖蘋果派',85)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake7.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">提拉米蘇</div>
+                    <div class="foodPrice">$ 85</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','提拉米蘇',85)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_cake8.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">草莓脆皮泡芙</div>
+                    <div class="foodPrice">$ 40</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','草莓脆皮泡芙',40)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="foodBlock" style="margin-top: 50px;">
+            <div class="blockTitle">飲料</div>
+            <div class="foodRow" style="margin-top: 30px;">
+                <div class="foodElement">
+                    <img src="assest/lousia_drink1.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">咖啡拿鐵</div>
+                    <div class="foodPrice">$ 70</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','咖啡拿鐵',70)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_drink2.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">拿鐵歐蕾</div>
+                    <div class="foodPrice">$ 65</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','拿鐵歐蕾',65)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_drink3.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">卡布奇諾</div>
+                    <div class="foodPrice">$ 70</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','卡布奇諾',70)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+                <div class="foodElement" style="margin-left: 6.66%;">
+                    <img src="assest/lousia_drink4.jpg" class="foodIcon">
+                    <div class="splitLine"></div>
+                    <div class="foodName">義式摩卡</div>
+                    <div class="foodPrice">$ 80</div>
+                    <button class="shoppingButton" onclick="addItem('路易莎咖啡','義式摩卡',80)">
+                        <img src="assest/cartIcon.png">
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script>
+
+            $.ajax({
+                url:"./php/checkSession.php",    
+                type: "post",   
+                async: false,
+                data: 
+                {
+                    loginAccount : 1
+                },
+                success:function(result)
+                {
+                    console.log(result);
+                    if(result.includes("true"))
+                    {
+                        var loginButton = document.getElementById('loginButton');
+                        var registerButton = document.getElementById('registerButton');
+                        loginButton.remove();
+                        registerButton.remove();
+
+                        if(sessionStorage.getItem("shoppingCart") != null) 
+                        {
+                            var cartList = JSON.parse(sessionStorage.getItem("shoppingCart"));
+                            document.getElementById("cartAmount").style.display = "block";
+                            document.getElementById("cartAmount").innerHTML =  cartList['orderList'].length;
+
+                            var sum = 0;
+                            for(var i = 0; i < cartList['orderList'].length; i++)
+                            {
+                                sum += cartList['orderList'][i]['price'] * cartList['orderList'][i]['amount'];
+                            }
+                            document.getElementById("totalPrice").innerHTML = "<img src=\"assest/cartIconRed.png\">" + "$ " + sum;
+                        }
+                    }
+                    else
+                    {
+                        var logoutButton = document.getElementById('logoutButton');
+                        logoutButton.remove();
+
+                        var accountInfo = document.getElementById('accountInfo');
+                        var shoppingCar = document.getElementById('shoppingCar');
+                        var Order = document.getElementById('Order');
+                        accountInfo.remove();
+                        shoppingCar.remove();
+                        Order.remove();
+
+                        var shopButtons = document.getElementsByClassName('shoppingButton');
+                        while(shopButtons.length > 0)
+                        {
+                            shopButtons[0].remove();
+                        }
+
+                        var totalPrice = document.getElementById('totalPrice');
+                        totalPrice.remove();
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+            $.ajax({
+                url:"./php/checkIsShopOwner.php",    
+                type: "post",   
+                async: false,
+                data: {loginAccount : 1},
+                success:function(result)
+                {
+                    if(result.includes("true"))
+                    {
+                        window.location.href = "index.html";
+                    }
+                },
+                error: function(xhr, status, error) 
+                {
+                    window.alert("發生錯誤！");
+                }
+            });
+
+
+        </script>
+        
+
+
+    </body>
+
+</html>
